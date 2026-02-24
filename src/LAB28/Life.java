@@ -2,11 +2,12 @@ package LAB28;
 
 public class Life {
     private Stagione s = new Stagione();
+    private Terreno t = new Terreno();
     private int anni = 0;
     private int quarter = 0;
     public void nextYear(Foresta f) {
         for (int g = 1; g <= 365 + this.isBisestile(this.quarter); g++) {
-            f.nuovoGiorno(s);
+            f.nuovoGiorno(this.t, this.s);
         }
         this.anni++;
         this.quarter++;

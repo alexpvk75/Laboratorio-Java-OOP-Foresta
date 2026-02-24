@@ -12,6 +12,7 @@ public abstract class Albero {
     private String ID = "";
     private int posX = 0;
     private int posY = 0;
+    public boolean cresco = false;
     private List<Foglia> foglie = new ArrayList<Foglia>();
     private Random r = new Random();
     public int numeroCasuale(int min, int max){
@@ -36,19 +37,21 @@ public abstract class Albero {
     protected void setCrescitaAltezza(int x) { 
         this.crescitaAltezza = x; //non cambia attributo altezza perche quella variabile e' privata, cambia solo crescitaAltezza
     }
-    public void cresci(int oreDiLuce) {
-        this.anni = this.anni + 1;
-        int diametroPrecedente = this.tronco;
-        this.tronco = this.crescitaDiametroTronco * this.anni;
-        this.altezza = this.crescitaAltezza * this.anni;
+    public void cresci(Terreno t, int oreDiLuce) {
+        if(t.verificaSpazioPerCrescere(this, this.cresco)){
+            this.anni = this.anni + 1;
+            int diametroPrecedente = this.tronco;
+            this.tronco = this.crescitaDiametroTronco * this.anni;
+            this.altezza = this.crescitaAltezza * this.anni;
         
-        if (this.tronco > diametroPrecedente) {
-            if (this.foglie.size() == 0 && this.tronco > 0) {
-                int foglieNuove = this.numeroCasuale(1, 10);
-                for (int i = 0; i < foglieNuove; i++) {
-                    Foglia f = new Foglia();
-                    f.nasce(oreDiLuce);
-                    this.foglie.add(f);
+            if (this.tronco > diametroPrecedente) {
+                if (this.foglie.size() == 0 && this.tronco > 0) {
+                    int foglieNuove = this.numeroCasuale(1, 10);
+                    for (int i = 0; i < foglieNuove; i++) {
+                        Foglia f = new Foglia();
+                        f.nasce(oreDiLuce);
+                        this.foglie.add(f);
+                    }
                 }
             } else if (this.foglie.size() > 0) {
                 for (Foglia f : this.foglie) {
@@ -56,6 +59,9 @@ public abstract class Albero {
                 }
             }
         }
+    }
+    public boolean equals(Albero a) {
+        return this.ID.equals(a.getID());
     }
     public int getAltezza() {
         return altezza;

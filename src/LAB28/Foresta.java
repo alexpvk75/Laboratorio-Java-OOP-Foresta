@@ -14,19 +14,21 @@ public class Foresta {
         if (specie.equals("betulla")) {
             Betulla b = new Betulla();
             b.setID("b"+String.format("%04d", this.quantitaAlberi+1));
-            if(t.verificaSpazioPerCrescere(b)){
+            if(t.verificaSpazioPerCrescere(b, false)){
                 this.piante.add(b);
                 this.pianteID.add(b.getID());
                 piantato = true;
+                b.cresco = true;
             }
         }
         if (specie.equals("quercia")) {
             Quercia q = new Quercia();
             q.setID("q"+String.format("%04d", this.quantitaAlberi+1));
-            if(t.verificaSpazioPerCrescere(q)){
+            if(t.verificaSpazioPerCrescere(q, false)){
                 this.piante.add(q);
                 this.pianteID.add(q.getID());
                 piantato = true;
+                q.cresco = true;
             }
         }
         if(piantato) {
@@ -58,12 +60,12 @@ public class Foresta {
         }
         return totalFoglie;
     }
-    public void nuovoGiorno(Stagione s) {
+    public void nuovoGiorno(Terreno t, Stagione s) {
         int oreDiLuce = s.nuovoGiorno();
         if (oreDiLuce > 4) {
             for (int i = 0; i < this.piante.size(); i++) {
                 Albero a = this.piante.get(i);
-                a.cresci(oreDiLuce);
+                a.cresci(t, oreDiLuce);
             }
         }
         if (s.isPrimavera()) {
