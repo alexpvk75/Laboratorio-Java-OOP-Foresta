@@ -10,12 +10,14 @@ public class Foresta {
         // costruttore default
     }
     public void piantaAlbero(String specie, Terreno t) {
+        boolean piantato = false;
         if (specie.equals("betulla")) {
             Betulla b = new Betulla();
             b.setID("b"+String.format("%04d", this.quantitaAlberi+1));
             if(t.verificaSpazioPerCrescere(b)){
                 this.piante.add(b);
                 this.pianteID.add(b.getID());
+                piantato = true;
             }
         }
         if (specie.equals("quercia")) {
@@ -24,9 +26,12 @@ public class Foresta {
             if(t.verificaSpazioPerCrescere(q)){
                 this.piante.add(q);
                 this.pianteID.add(q.getID());
+                piantato = true;
             }
         }
-        this.quantitaAlberi++;
+        if(piantato) {
+            this.quantitaAlberi++;
+        }
     }
 
     public void piantaAlbero(String specie, int quantita, Terreno t) {
